@@ -53,3 +53,62 @@ class Multilinguist
   end
 end
 
+class MathGenius < Multilinguist
+
+  def report_total(value)
+    total = 0
+    value.each do |number| 
+      total += number
+    end 
+    say_in_local_language("The total is #{total}") 
+  end
+end
+
+class QuoteCollector < Multilinguist
+
+attr_reader :quote_collection
+
+  def initialize
+    @quote_collection = []
+  end
+
+  def add_quote(quote)
+    value = quote
+    quote_collection << value
+    quote_collection
+  end
+
+  def koan_time
+    perform = quote_collection.sample 
+    say_in_local_language("#{perform}")
+  end
+
+end
+
+
+me = MathGenius.new
+you = QuoteCollector.new
+
+
+puts me.report_total([1,1,2,3,5,8,13,21])
+
+me.travel_to("Japan")
+
+puts me.report_total([1,11,111,1111])
+
+me.travel_to("China")
+
+puts me.report_total([1,11,111,1111])
+
+you.add_quote("The truth is not for all men but only for those who seek it.")
+you.add_quote("No person is your friend who demands your silence, or denies your right to grow.")
+you.add_quote("Happiness is part of who we are. Joy is the feeling")
+you.add_quote("Freedom is what we do with what is done to us.")
+puts you.travel_to("France")
+puts you.koan_time
+
+puts you.travel_to("Denmark")
+puts you.koan_time
+
+puts you.travel_to("Italy")
+puts you.koan_time
