@@ -1,20 +1,20 @@
 class System
-  attr_reader :bodies
+  attr_reader :bodies, :name
 
   def initialize(name)
     @name = name
-    @bodies = []
+    @@bodies = []
   end
 
   def add(name, mass)
-    bodies << name
+    @@bodies << name
   end
 end
 
 # VALUES FROM https://nssdc.gsfc.nasa.gov/planetary/factsheet/
 
 class Body < System
-attr_reader :body
+attr_reader :body, :name, :mass
   def initialize(name, mass)
     @name = name
     @mass = mass
@@ -24,7 +24,7 @@ end
 
 
 class Planet < Body
-attr_reader :name, :mass
+attr_reader :mass
 
   def initialize(name, mass)
     super(name, mass)
@@ -32,36 +32,26 @@ attr_reader :name, :mass
 
   def day(hours)
     one_day = hours
+    "#{@name}/'s day is #{one_day} hours long."
   end
 
   def year(days) #earth days
     orbital_period = days
+    "One year on #{@name} is equal to #{orbital_period} here on earth.ob"
   end
 end
 
 class Star < Body
-attr_reader :body
+attr_reader :body, :type
 
   def initialize(name, mass)
     super(name, mass)
+    @type = type
+
   end
 
-  def type(mass)
-    if mass > 0.08 && mass <= 0.5
-      "Red M-type star"
-    elsif mass > 0.5 && mass <= 0.8
-      "Orange K-type star"
-    elsif mass > 0.5 && mass <= 1.05
-      "Yellow-white G-type star"
-    elsif mass > 1.05 && mass <= 2.0
-      "White F-type star"
-    elsif mass > 2.0 && mass <= 4.0
-      "blue-white A-type star"
-    elsif mass > 4.0 && mass <= 100
-      "Bluish B-type star"
-    else
-      "Solar mass not applicable"
-    end
+  def type(name, mass, type)
+    "#{@name} has a relative mass of #{@mass}, and is a #{@type} star."
   end
       # 0.08 - 0.5 - red M
       # 0.5 - 0.8 - orange K
@@ -81,12 +71,18 @@ class Moon < Body
   def month(days)
     orbit = days
     "#{orbit}"
-  
+  end
 end
 
 mw_galaxy = System.new("Milky Way Galaxy")
-mercury = Body.new("Mercury", 0.330)
-venus = Body.new('Venus', 4.87)
+mercury = Planet.new("Mercury", 0.330)
+venus = Planet.new('Venus', 4.87)
+sun = Star.new("The Sun", 1.0, "G-type")
 
 mercury.add("Mercury", 0.330)
-venus.add('Venus', 4.87)
+venus.add("Venus", 4.87)
+sun.add("The Sun", 1.0)
+
+puts venus.day(2802)
+puts mercury.year(88)
+puts sun.type("The Sun", 1.0, "G-type")
